@@ -1,0 +1,19 @@
+{
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "compilerOptions": {
+    "baseUrl": ".",        // root of the project
+    "paths": {
+      "~/*": ["./*"],     // ~ resolves to project root
+      "@/*": ["./*"]      // optional: @ alias also works
+    }
+  },
+
+  "files": [],
+  
+  "references": [
+    {"path": "./.nuxt/tsconfig.app.json"},
+    {"path": "./.nuxt/tsconfig.server.json"},
+    {"path": "./.nuxt/tsconfig.shared.json"},
+    {"path": "./.nuxt/tsconfig.node.json"},
+  ],
+}
