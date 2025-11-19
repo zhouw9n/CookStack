@@ -1,4 +1,4 @@
-import db from "~~/server/database/db";
+import db from '~~/server/database/db';
 import { readBody } from 'h3';
 
 export default defineEventHandler(async(event) => {
@@ -6,30 +6,29 @@ export default defineEventHandler(async(event) => {
         // Read id from URL
         const recipeId = Number(event.context.params?.id);
         // Read the request body
-        const { isFavorite } = await readBody<Record<"isFavorite", boolean>>(event);
+        const { viewedAt } = await readBody<Record<"viewedAt", string>>(event);
 
-        // Prepare put statement with placeholders
-        const updateRecipeStmt = db.prepare(`
-            UPDATE recipes SET is_favorite = ? WHERE id = ?
+        // Prepare statement with placeholders
+        const stmt = db.prepare(`
+            UPDATE recipes SET viewed_at = ? WHERE id = ?
         `);
-        
-        // Insert updated value in column
-        updateRecipeStmt.run(
-            isFavorite ? 1 : 0,
-            recipeId,
+
+        // Insert value in column
+        stmt.run(
+            viewedAt,
+            recipeId
         );
 
         // Logging
-        console.log("Recipe: ", recipeId, " isFavorite: ", isFavorite);
+        console.log("Recipe: ", recipeId, " Last viewed: ", viewedAt);
 
         // SUCCESS: Return object
         return {
             status: 200,
             success: true,
         }
-
     } catch (err) {
-        console.log("Error updating favorite: ", err);
+        console.log("Error updating viewed at: ", err);
 
         // ERROR: Return object
         return {
@@ -38,5 +37,4 @@ export default defineEventHandler(async(event) => {
             message: "Internal server error"
         }
     }
-
 });

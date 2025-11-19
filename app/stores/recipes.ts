@@ -81,7 +81,7 @@ export const useRecipeStore = defineStore("recipes", {
             recipe.isFavorite = !favoriteVal;
 
             try {
-                const response = await $fetch<UpdateRecipeResponse>(`/api/recipes/${id}/favorite`,
+                const response = await $fetch<UpdateRecipeResponse>(`/api/recipe/${id}/favorite`,
                     {
                         method: "PUT",
                         body: { isFavorite: recipe.isFavorite } 
@@ -94,10 +94,43 @@ export const useRecipeStore = defineStore("recipes", {
                     return;
                 }
 
-            } catch (err) {
+            } catch (err: any) {
                 console.error("Failed to update favorite.", err);
                 // Revert back to original value on error
                 recipe.isFavorite = favoriteVal;
+            }
+        },
+
+        // UPDATE VIEWED AT
+        async updateViewedAt(id:number) {
+            const recipe = this.getRecipeById(id);
+            if (!recipe) return;
+
+            const viewedAtVal = recipe.viewedAt;
+
+            const timestamp = getUTCTimestamp();
+
+            console.log(timestamp);
+            // Optimistic UI update
+            recipe.viewedAt = timestamp
+
+            try {
+                const response = await $fetch<UpdateRecipeResponse>(`/api/recipe/${id}/timestamp`,
+                    {
+                        method:  "PUT",
+                        body: { viewedAt: recipe.viewedAt}
+                    }
+                );
+
+                // Revert back to orignial value if unsuccessful
+                if (!response.success) {
+                    recipe.viewedAt = viewedAtVal;
+                    return;
+                }
+
+            } catch (err: any) {
+                console.error("Failed to updated viewed at.", err);
+                recipe.viewedAt = viewedAtVal;
             }
         },
     },
@@ -111,6 +144,13 @@ export const useRecipeStore = defineStore("recipes", {
 
         getFavoriteRecipes: (state) => {
             return state.recipes.filter( recipe => recipe.isFavorite);
+        },
+
+        getRecentlyViewed: (state) => {
+            return state.recipes
+                .slice()
+                .sort((a, b) => (new Date(b.viewedAt ?? 0).getTime()) - (new Date(a.viewedAt ?? 0).getTime()))
+                .slice(0, 10);
         }
     }
     

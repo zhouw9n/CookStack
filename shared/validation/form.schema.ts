@@ -24,8 +24,8 @@ export const formSchema = z.object({
 
     // Optional - populated by backend after creation
     id: z.number().optional(),
-    createdAt: z.iso.datetime().optional(), // timestamp of creation
-    viewedAt: z.iso.datetime().optional(), // last time viewed
+    createdAt: z.string().optional(), // timestamp of creation
+    viewedAt: z.string().optional(), // last time viewed
     isFavorite: z.boolean().optional(), // user favorite flag
 
     imageId: z.number().optional(),

@@ -18,7 +18,7 @@
  * @returns A new array of objects with camel cased keys.
  */
 
-export function snakeToCamel(obj: Array<Record<string,any>>) {
+export function snakeToCamel(obj: Array<Record<string,any>>): Array<Record<string, any>> {
 
     const formatted = obj.map(entry => {
 

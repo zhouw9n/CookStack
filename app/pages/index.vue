@@ -10,7 +10,9 @@ const { isMobile } = defineProps<{
 const recipeStore = useRecipeStore();
 const { recipes, loading, error } = storeToRefs(recipeStore);
 
+const { getRecentlyViewed } = storeToRefs(recipeStore);
 
+console.log("Recently Viewed: ", getRecentlyViewed.value);
 
 const limitedRecipes = recipes.value.slice(0, 12);
 

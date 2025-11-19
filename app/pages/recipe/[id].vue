@@ -14,6 +14,11 @@ const { getRecipeById } = storeToRefs(recipeStore);
 
 const recipe: Recipe | undefined = getRecipeById.value(recipeId);
 
+onMounted(() => {
+    recipeStore.updateViewedAt(recipeId);
+})
+
+
 
 function handleEdit() {
 
