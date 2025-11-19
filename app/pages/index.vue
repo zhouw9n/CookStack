@@ -10,17 +10,45 @@ const { isMobile } = defineProps<{
 const recipeStore = useRecipeStore();
 const { recipes, loading, error } = storeToRefs(recipeStore);
 
-console.log(recipes.value)
+const { goToRecipe } = useRecipeNavigation();
 
+const limitedRecipes = recipes.value.slice(0, 12);
 
 </script>
 
 <template>
     <div class="mx-auto px-2 w-full min-w-[300px] max-w-[1200px]">
-        <Header layout="search" :is-mobile="isMobile"/>
+    
+        <Header 
+            layout="search" 
+            :is-mobile="isMobile"
+        />
         
-        <main class="min-h-[calc(100dvh-64px-72px)]">
-            <div class="bg-darkgrey mt-10 mb-6 rounded-lg w-[200px] h-6 animate-pulse"></div>
+        <!-- Recently Viewed Section -->
+
+        <!-- Recipes Section -->
+        <main class="pt-10 pb-4 min-h-[calc(100dvh-64px-72px)]">
+            <section>
+                <div class="flex justify-between items-end">
+                    <h1 class="font-medium text-large">My Recipes</h1>
+
+                    <NuxtLink to="/myrecipes" class="flex items-center gap-1">
+                        <span>View All</span>
+                        <NuxtImg src="/assets/icons/arrow.svg" class="size-4 rotate-180"/>
+                    </NuxtLink>
+                </div>
+                <div class="gap-1 grid grid-cols-2 mt-4">
+                    <RecipeCard v-for="recipe in limitedRecipes"
+                        :key="recipe.id"
+                        :recipe="recipe"
+                        @mousedown="goToRecipe(Number(recipe.id))"
+                    />
+                </div>
+            </section>
+            
+
+
+            <!-- <div class="bg-darkgrey mt-10 mb-6 rounded-lg w-[200px] h-6 animate-pulse"></div>
             <div class="gap-1 grid grid-cols-2"> 
                 <SkeletonCardSmall v-for="n in 2" 
                     :key="n"
@@ -34,9 +62,10 @@ console.log(recipes.value)
                 <SkeletonCardSmall v-for="n in 6" 
                     :key="n"
                 />
-            </div>
+            </div> -->
         </main>
     </div>
     
     <MobileNavigation v-if="isMobile" />
+    
 </template>

@@ -11,6 +11,8 @@ const { isMobile } = defineProps<{isMobile: boolean}>();
 const recipeStore = useRecipeStore();
 const { loading, error } = storeToRefs(recipeStore);
 
+const { goToRecipe } = useRecipeNavigation();
+
 // Stores flags to update Form UI Inputs accordingly
 const errors = reactive<Record<string, boolean>>({});
 
@@ -37,7 +39,7 @@ const formState = reactive({
 });
 
 function addIngredientItem() {
-    ingredientId++
+    ingredientId++;
     formState.ingredients.push({id: ingredientId, amount: 0, unit: "", item: ""});
 }
 
@@ -48,12 +50,11 @@ function removeIngredientItem(id: number) {
 
 
 function addInstruction() {
-    instructionId++
+    instructionId++;
     formState.instructions.push({id: instructionId, instruction: ""});
 }
 
 function removeInstruction(id: number) {
-    console.log(id)
     formState.instructions = formState.instructions.filter(instruction => instruction.id !== id);
     
 }
@@ -77,8 +78,7 @@ async function handleSubmit(e: Event) {
             return;
         }
         // Navigate to page of newly created recipe
-        const router = useRouter();
-        router.push(`/recipe/${response.recipeId}`);
+        goToRecipe(Number(response.recipeId));
     } catch (err: any) { 
         throw createError({statusCode: 500, statusMessage: "Internal server error."})
     }
@@ -107,7 +107,7 @@ function validateForm() {
             
         </div>
         <form class="flex flex-col gap-16 mt-10 mb-4">
-            
+
             <!--GENERAL-->
             <section class="flex flex-col gap-4">
                 <FormInputText 

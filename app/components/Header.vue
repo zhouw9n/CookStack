@@ -23,8 +23,8 @@ const {layout, isMobile} = defineProps<{
             </NuxtLink>
         </div>
         
-        <div class="ml-2">
-            <ButtonSmall v-if="!isMobile" icon="list"  />
+        <div v-if="!isMobile" class="ml-2">
+            <ButtonSmall icon="list"  />
         </div>
 
     </header>
@@ -35,8 +35,8 @@ const {layout, isMobile} = defineProps<{
         <div class="flex-1 lg:max-w-[610px]">
             <SearchBar />
         </div>
-        <div class="ml-2">
-            <ButtonSmall v-if="!isMobile" icon="list" />
+        <div v-if="!isMobile" class="ml-2">
+            <ButtonSmall  icon="list" />
         </div>
     </header>
 </template>
