@@ -97,7 +97,5 @@ function handleEdit() {
             
         </main>
     </div>
-
-    <MobileNavigation v-if="isMobile" />
 </template>
  

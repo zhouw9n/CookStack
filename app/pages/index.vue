@@ -10,7 +10,7 @@ const { isMobile } = defineProps<{
 const recipeStore = useRecipeStore();
 const { recipes, loading, error } = storeToRefs(recipeStore);
 
-const { goToRecipe } = useRecipeNavigation();
+
 
 const limitedRecipes = recipes.value.slice(0, 12);
 
@@ -24,11 +24,11 @@ const limitedRecipes = recipes.value.slice(0, 12);
             :is-mobile="isMobile"
         />
         
-        <!-- Recently Viewed Section -->
-
-        <!-- Recipes Section -->
         <main class="pt-10 pb-4 min-h-[calc(100dvh-64px-72px)]">
-            <section>
+            <!-- Recently Viewed Section -->
+
+            <!-- Recipes Section -->
+            <section v-if="recipes">
                 <div class="flex justify-between items-end">
                     <h1 class="font-medium text-large">My Recipes</h1>
 
@@ -41,7 +41,6 @@ const limitedRecipes = recipes.value.slice(0, 12);
                     <RecipeCard v-for="recipe in limitedRecipes"
                         :key="recipe.id"
                         :recipe="recipe"
-                        @mousedown="goToRecipe(Number(recipe.id))"
                     />
                 </div>
             </section>
@@ -66,6 +65,6 @@ const limitedRecipes = recipes.value.slice(0, 12);
         </main>
     </div>
     
-    <MobileNavigation v-if="isMobile" />
+    
     
 </template>

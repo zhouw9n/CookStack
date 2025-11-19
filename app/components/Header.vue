@@ -15,7 +15,7 @@ const {layout, isMobile} = defineProps<{
     
     <header v-if="layout === 'return'" 
         class="flex items-center"
-        >
+    >
         <div class="flex-1 py-4">
             <NuxtLink :to="returnTo" class="flex items-center gap-2 w-fit">
                 <NuxtImg src="/assets/icons/arrow.svg" class="size-4" />
@@ -31,7 +31,7 @@ const {layout, isMobile} = defineProps<{
     
     <header v-if="layout === 'search'" 
         class="flex justify-between py-4"
-        >
+    >
         <div class="flex-1 lg:max-w-[610px]">
             <SearchBar />
         </div>

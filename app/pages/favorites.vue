@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import MobileNavigation from '~/components/MobileNavigation.vue';
 
 const { isMobile } = defineProps<{
     isMobile: boolean
 }>();
 
 const recipeStore = useRecipeStore();
-const { getFavoriteRecipes } = storeToRefs(recipeStore)
-
-const { goToRecipe } = useRecipeNavigation();
+const { getFavoriteRecipes } = storeToRefs(recipeStore);
 
 
 </script>
@@ -32,13 +29,9 @@ const { goToRecipe } = useRecipeNavigation();
                     <RecipeCard v-for="recipe in getFavoriteRecipes"
                         :key="recipe.id"
                         :recipe="recipe"
-                        @mousedown="goToRecipe(Number(recipe.id))"
                     />
                 </div>
             </section>
         </main>
     </div>
-    
-    
-    <MobileNavigation v-if="isMobile" />
 </template>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useRecipeNavigation } from '#imports';
 
     const { isMobile } = defineProps<{
         isMobile: boolean
@@ -8,7 +7,6 @@ import { useRecipeNavigation } from '#imports';
     const recipeStore = useRecipeStore();
     const { recipes } = storeToRefs(recipeStore);
 
-    const { goToRecipe } = useRecipeNavigation();
 </script>
 
 <template>
@@ -21,17 +19,18 @@ import { useRecipeNavigation } from '#imports';
    
         <main class="pt-10 pb-4 min-h-[calc(100dvh-64px-72px)]">
             <section>
-                <h1 class="font-medium text-large">My Recipes</h1>
+                <div class="flex justify-between items-center">
+                    <h1 class="font-medium text-large">My Recipes</h1>
+
+                    <ButtonSmall icon="filter"/>
+                </div>
                 <div class="gap-1 grid grid-cols-2 mt-4">
                     <RecipeCard v-for="recipe in recipes"
                         :key="recipe.id"
                         :recipe="recipe"
-                        @mousedown="goToRecipe(Number(recipe.id))"
                     />
                 </div>
             </section>
         </main>
     </div>
-    
-    <MobileNavigation v-if="isMobile"/>
 </template>

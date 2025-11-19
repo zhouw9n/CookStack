@@ -11,7 +11,7 @@ const { isMobile } = defineProps<{isMobile: boolean}>();
 const recipeStore = useRecipeStore();
 const { loading, error } = storeToRefs(recipeStore);
 
-const { goToRecipe } = useRecipeNavigation();
+
 
 // Stores flags to update Form UI Inputs accordingly
 const errors = reactive<Record<string, boolean>>({});
@@ -78,7 +78,8 @@ async function handleSubmit(e: Event) {
             return;
         }
         // Navigate to page of newly created recipe
-        goToRecipe(Number(response.recipeId));
+        const route = useRouter();
+        route.push(`/recipe/${response.recipeId}`);
     } catch (err: any) { 
         throw createError({statusCode: 500, statusMessage: "Internal server error."})
     }
@@ -208,6 +209,4 @@ function validateForm() {
         </form>
         
     </div>
-    
-    <MobileNavigation v-if="isMobile" />
 </template>
