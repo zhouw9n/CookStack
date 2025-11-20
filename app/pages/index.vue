@@ -10,9 +10,9 @@ const { isMobile } = defineProps<{
 const recipeStore = useRecipeStore();
 const { recipes, loading, error } = storeToRefs(recipeStore);
 
-const { getRecentlyViewed } = storeToRefs(recipeStore);
 
-console.log("Recently Viewed: ", getRecentlyViewed.value);
+
+
 
 const limitedRecipes = recipes.value.slice(0, 12);
 
@@ -26,8 +26,10 @@ const limitedRecipes = recipes.value.slice(0, 12);
             :is-mobile="isMobile"
         />
         
-        <main class="pt-10 pb-4 min-h-[calc(100dvh-64px-72px)]">
+        <main class="flex flex-col gap-10 pt-10 pb-4 min-h-[calc(100dvh-64px-72px)]">
+            
             <!-- Recently Viewed Section -->
+            <RecentlyViewedCarousel />
 
             <!-- Recipes Section -->
             <section v-if="recipes">
@@ -39,7 +41,7 @@ const limitedRecipes = recipes.value.slice(0, 12);
                         <NuxtImg src="/assets/icons/arrow.svg" class="size-4 rotate-180"/>
                     </NuxtLink>
                 </div>
-                <div class="gap-1 grid grid-cols-2 mt-4">
+                <div class="gap-3 grid grid-cols-2 mt-4">
                     <RecipeCard v-for="recipe in limitedRecipes"
                         :key="recipe.id"
                         :recipe="recipe"
