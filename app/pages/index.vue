@@ -10,10 +10,7 @@ const { isMobile } = defineProps<{
 const recipeStore = useRecipeStore();
 const { recipes, loading, error } = storeToRefs(recipeStore);
 
-
-
-
-
+// My Recipes Preview limited to 12 recipes
 const limitedRecipes = recipes.value.slice(0, 12);
 
 </script>
@@ -26,46 +23,23 @@ const limitedRecipes = recipes.value.slice(0, 12);
             :is-mobile="isMobile"
         />
         
-        <main class="flex flex-col gap-10 pt-10 pb-4 min-h-[calc(100dvh-64px-72px)]">
+        <main class="flex flex-col gap-10 pt-5 pb-4 min-h-[calc(100dvh-64px-72px)]">
             
-            <!-- Recently Viewed Section -->
             <RecentlyViewedCarousel />
 
-            <!-- Recipes Section -->
-            <section v-if="recipes">
-                <div class="flex justify-between items-end">
-                    <h1 class="font-medium text-large">My Recipes</h1>
-
+            <RecipeGallery
+                title="My Recipes"
+                :recipes="limitedRecipes"
+            >
+                <!-- Action Slot-->
+                <template #action>
                     <NuxtLink to="/myrecipes" class="flex items-center gap-1">
                         <span>View All</span>
                         <NuxtImg src="/assets/icons/arrow.svg" class="size-4 rotate-180"/>
-                    </NuxtLink>
-                </div>
-                <div class="gap-3 grid grid-cols-2 mt-4">
-                    <RecipeCard v-for="recipe in limitedRecipes"
-                        :key="recipe.id"
-                        :recipe="recipe"
-                    />
-                </div>
-            </section>
-            
+                    </NuxtLink>                    
+                </template>
+            </RecipeGallery>
 
-
-            <!-- <div class="bg-darkgrey mt-10 mb-6 rounded-lg w-[200px] h-6 animate-pulse"></div>
-            <div class="gap-1 grid grid-cols-2"> 
-                <SkeletonCardSmall v-for="n in 2" 
-                    :key="n"
-                />
-            </div>
-            <div class="flex justify-between items-end mt-20 mb-6">
-                <div class="bg-darkgrey rounded-lg w-[200px] h-6 animate-pulse"></div>
-                <div class="bg-darkgrey rounded w-[80px] h-4 animate-pulse"></div>
-            </div>
-            <div class="gap-1 grid grid-cols-2 mb-4"> 
-                <SkeletonCardSmall v-for="n in 6" 
-                    :key="n"
-                />
-            </div> -->
         </main>
     </div>
     

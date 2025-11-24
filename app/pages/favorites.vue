@@ -18,20 +18,25 @@ const { getFavoriteRecipes } = storeToRefs(recipeStore);
             :is-mobile="isMobile" 
         />
         
-        <main class="pt-10 pb-4 min-h-[calc(100dvh-64px-72px)]">
-            <section>
-                <div class="flex justify-between items-center">
-                    <h1 class="font-medium text-large">Favorites</h1>
+        <main class="flex flex-col pt-5 pb-4 min-h-[calc(100dvh-64px-72px)]">
 
+            <RecipeGallery
+                title="Favorites"
+                :recipes="getFavoriteRecipes"
+            >
+                <!-- Action Slot: Filter Button -->
+                <template #action>
                     <ButtonSmall icon="filter"/>
-                </div>
-                <div class="gap-1 grid grid-cols-2 mt-4">
-                    <RecipeCard v-for="recipe in getFavoriteRecipes"
-                        :key="recipe.id"
-                        :recipe="recipe"
-                    />
-                </div>
-            </section>
+                </template>
+
+                <!-- Empty Slot: No Favorites -->
+                 <template #empty>
+                    <NuxtImg src="/assets/icons/fork-knife.svg" class="opacity-70 size-16" />
+                    <h1 class="opacity-70 mt-4 text-large">No Favorites Yet</h1>
+                    <p class="opacity-70">Start by adding your favorite recipes</p>
+                 </template>
+            </RecipeGallery>
+
         </main>
     </div>
 </template>

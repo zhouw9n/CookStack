@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Recipe } from '~~/shared/validation/form.schema';
+
 
     const { isMobile } = defineProps<{
         isMobile: boolean
@@ -17,20 +19,31 @@
             :is-mobile="isMobile" 
         />
    
-        <main class="pt-10 pb-4 min-h-[calc(100dvh-64px-72px)]">
-            <section>
-                <div class="flex justify-between items-center">
-                    <h1 class="font-medium text-large">My Recipes</h1>
-
+        <main class="flex flex-col pt-5 pb-4 min-h-[calc(100dvh-64px-72px)]">
+            <RecipeGallery
+                title="My Recipes"
+                :recipes="recipes"
+            >
+                <!-- Action Slot -->
+                <template #action>
                     <ButtonSmall icon="filter"/>
-                </div>
-                <div class="gap-1 grid grid-cols-2 mt-4">
-                    <RecipeCard v-for="recipe in recipes"
-                        :key="recipe.id"
-                        :recipe="recipe"
-                    />
-                </div>
-            </section>
+                </template>
+
+                <!-- Empty Slot: No Recipes Found -->
+                <template #empty>
+                    <NuxtImg src="/assets/icons/fork-knife.svg" class="opacity-70 size-16" />
+                    <h1 class="opacity-70 mt-4 text-large">No Recipes Yet</h1>
+                    <p class="opacity-70 mb-4">Start by adding a new recipe</p>
+                    <NuxtLink
+                        to="/newrecipe"
+                        class="flex justify-center items-center gap-2 bg-spacegrey px-2 rounded-lg h-9 text-offwhite"
+                    >
+                        <NuxtImg src="/assets/icons/plus-circle-white.svg" class="size-4" />
+                        <span>Add a Recipe</span>
+                    </NuxtLink>
+                </template>
+                
+            </RecipeGallery>
         </main>
     </div>
 </template>
