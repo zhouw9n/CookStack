@@ -8,6 +8,7 @@
   const recipeStore = useRecipeStore();
   await recipeStore.getAllRecipes();
 
+
   
 </script>
 
@@ -16,6 +17,7 @@
     <NuxtPage :is-mobile="isMobile" />
   </div>
   <MobileNavigation v-if="isMobile" />
+  
 </template>
 
 

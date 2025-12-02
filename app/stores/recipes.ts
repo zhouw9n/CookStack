@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { normalize } from 'zod';
 import { normalizeRecipe } from '~/utils/normalizeRecipe';
 import type { UpdateRecipeResponse } from '~~/shared/types/recipe';
 import type { Recipe } from '~~/shared/validation/form.schema';
@@ -151,6 +150,11 @@ export const useRecipeStore = defineStore("recipes", {
                 .slice()
                 .sort((a, b) => (new Date(b.viewedAt ?? 0).getTime()) - (new Date(a.viewedAt ?? 0).getTime()))
                 .slice(0, 10);
+        },
+
+        // COMMENT: For future extension when the user can add their own categories
+        getCategories: (state) => {
+            return new Set(state.recipes.map( recipe => recipe.category));
         }
     }
     

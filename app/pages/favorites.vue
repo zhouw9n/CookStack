@@ -5,7 +5,33 @@ const { isMobile } = defineProps<{
 }>();
 
 const recipeStore = useRecipeStore();
-const { getFavoriteRecipes } = storeToRefs(recipeStore);
+const { getFavoriteRecipes, getCategories } = storeToRefs(recipeStore);
+
+const filterMenu = useFilterMenu();
+
+// Track state of filters
+const filterState = reactive({
+    categories: {} as Record<string, boolean>,
+    sortby: "All",
+});
+
+// Initialize categories in filterState dynamically according to unique categories from database
+watch(getCategories, (categories) => {
+    categories.forEach(cat => {
+        if (!(cat in filterState.categories)) {
+            filterState.categories[cat] = false;
+        }
+    });
+}, 
+{ immediate: true}
+);
+
+// Toggle category state
+function toggleCategory(category: string) {
+    filterState.categories[category] = !filterState.categories[category];
+}
+
+
 
 
 </script>
@@ -26,7 +52,10 @@ const { getFavoriteRecipes } = storeToRefs(recipeStore);
             >
                 <!-- Action Slot: Filter Button -->
                 <template #action>
-                    <ButtonSmall icon="filter"/>
+                    <ButtonSmall
+                        icon="filter"
+                        @click="filterMenu.openFilterMenu()"
+                    />
                 </template>
 
                 <!-- Empty Slot: No Favorites -->
@@ -38,5 +67,11 @@ const { getFavoriteRecipes } = storeToRefs(recipeStore);
             </RecipeGallery>
 
         </main>
+
+        <MobileFilterMenu v-if="filterMenu.isOpen.value" 
+            :filter-state="filterState"
+            @category="toggleCategory"
+            @sort="val => filterState.sortby = val"
+        />
     </div>
 </template>

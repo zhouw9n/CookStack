@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { UNIT_OPTIONS } from "~~/shared/constants/units";
+import { UNIT_OPTIONS } from "~~/shared/constants/options";
 
 
 export const ingredientSchema = z.object({

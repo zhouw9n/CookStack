@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UNIT_OPTIONS } from '~~/shared/constants/units';
+import { UNIT_OPTIONS } from '~~/shared/constants/options';
 import type { Ingredient } from '~~/shared/types/recipe';
 
 const { removable, id, errorAmount, errorUnit, errorItem } = defineProps<{
@@ -36,7 +36,7 @@ watch([amountVal, unitVal, itemVal], () => {
 </script>
 
 <template>
-    <div class="flex gap-1">
+    <div class="flex min-[321px]:justify-between gap-1">
         <!--AMOUNT-->
         <FormInputNumber 
             :id="'amount' + id" 
@@ -53,7 +53,7 @@ watch([amountVal, unitVal, itemVal], () => {
             :id="'unit' + id"
             label="Unit" 
             size="small" 
-            width="w-[80px]" 
+            width="w-[90px]" 
             :bold="false" 
             :error="errorUnit"
             :options="UNIT_OPTIONS" 
@@ -65,7 +65,7 @@ watch([amountVal, unitVal, itemVal], () => {
             label="Item" 
             placeholder="Eggs" 
             size="small" 
-            width="flex-1 max-w-[450px]"
+            width="max-[320px]:max-w-[155px] min-w-[155px] max-w-[450px]"
             :bold="false"  
             :error="errorItem"
             v-model="itemVal"

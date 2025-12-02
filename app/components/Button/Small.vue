@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 const { icon } = defineProps<{
-    icon: "bookmark-white" | "bookmark-fill-white" | "close" | "edit" | "filter" | "list",                                                  
+    icon: "bookmark-white" | "bookmark-fill-white" | "close" | "close-white" | "edit" | "filter" | "list",                                                  
 }>();
 
 </script>

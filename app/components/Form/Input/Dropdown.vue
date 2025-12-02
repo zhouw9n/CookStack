@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 
-const { id, label, bold, size, width, error } = defineProps<{
+const { id, label, bold, size, width, options, error } = defineProps<{
     id: string,
     label: string, 
     bold: boolean,
@@ -12,7 +12,7 @@ const { id, label, bold, size, width, error } = defineProps<{
 }>();
 
 const isFocused = ref(false);
-const unitValue = ref("-");
+//const unitValue = ref("-");
 const modelValue = defineModel<string>("modelValue");
 
 function handleFocus() {
@@ -49,7 +49,7 @@ function handleSelection(selectedOption: string) {
                     isFocused ? 'border-[2px] border-spacegrey' : 'border-[1px]',
                     error ? 'border-red' : 'border-spacegrey',
                 ]">
-                <span class="flex w-8 pointer-events-none">{{ modelValue || "-" }}</span>
+                <div class="flex truncate pointer-events-none">{{ modelValue || "-" }}</div>
                 <img src="/assets/icons/caret-down-fill.svg" class="size-4 pointer-events-none" />
             </div>
             <!--Dropdown-->
@@ -57,7 +57,7 @@ function handleSelection(selectedOption: string) {
                 :class="['-left-2 z-50 absolute bg-offwhite shadow-[0_4px_4px_0_rgba(23,23,23,0.15)] mx-2 mt-2  rounded-lg w-full h-[100px] overflow-y-scroll',
                 isFocused ? 'min-h-1 opacity-100' : 'max-h-0 opacity-0'   
             ]">
-                <li v-for="option in options"
+                <li v-for="(option) in options"
                     :key="option"
                     @mousedown="handleSelection(option)"
                     class="hover:bg-spacegrey my-1 first:mt-0 last:mb-0 px-2 hover:rounded-md hover:text-offwhite text-center list-none"

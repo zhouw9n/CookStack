@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
+import { CATEGORIES_OPTIONS } from '~~/shared/constants/options';
 import type { Ingredient } from '~~/shared/types/recipe';
 import type { Instruction } from '~~/shared/types/recipe';
 import { formSchema, parseErrors } from '~~/shared/validation/form.schema';
@@ -141,7 +142,7 @@ function validateForm() {
                     id="category" 
                     label="Category*" 
                     placeholder="Type or select category" 
-                    :options="['Appetizer', 'Breakfast', 'Dessert', 'Main', 'Snack', 'Other']" 
+                    :options="CATEGORIES_OPTIONS" 
                     :error="errors['category']"
                     v-model="formState.category"    
                 />
